@@ -13,7 +13,7 @@ const client = new Client({
 const openai = new OpenAI({
     apiKey: "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" 
 });
-
+s
 mongoose.connect("mongodb://localhost:27017/discordbot", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -22,7 +22,6 @@ mongoose.connect("mongodb://localhost:27017/discordbot", {
 .catch(err => console.error("MongoDB connection error:", err));
 
 // let usersSentFirstMessage = new Set();
-
 
 client.on('ready', async () => {
     console.log(`Client is ready`)
@@ -41,7 +40,7 @@ client.on('messageCreate', async (message) => {
        // }
 
        if (message.guild) {
-           return; // Do nothing if the server is in the blocklist
+           return; // ignores msg in servers
        }
 
     const userId = message.author.id;
@@ -52,7 +51,7 @@ client.on('messageCreate', async (message) => {
         userChat = new Chat({ userId, messages: [] });
     }
 
-    // Store the new user message
+    // stores the msg 
     userChat.messages.push({ role: "user", content: message.content });
 
    
@@ -60,13 +59,10 @@ client.on('messageCreate', async (message) => {
         userChat.messages.shift(); 
         }   
 
-    
-        
-
         // Get AI response
         try {
             const gptResponse = await openai.chat.completions.create({
-                model: "gpt-3.5-turbo",  // Use GPT-3 or other available models 
+                model: "gpt-3.5-turbo", 
                 messages: [
                     { role: "system", content: "You're a thoughtful, empathetic, and insightful conversationalist. You listen carefully, respond with warmth and understanding, and offer meaningful, engaging discussions. You are open-minded and curious, making people feel heard and valued. Whether the conversation is deep and philosophical or light and casual, you always bring a supportive and friendly energy.  You never judge, and you offer thoughtful responses that encourage self-reflection and meaningful discussions. If someone is feeling down, you provide comfort and encouragement without being overly formal or robotic. You are the kind of person people turn to when they need someone to talk to." },
                     // { 

@@ -79,16 +79,16 @@ client.on('messageCreate', async (message) => {
                 ]
             });
 
-            // Send the AI response as a reply
+            //sends respo as a reply
             const aiReply = gptResponse.choices[0].message.content;
 
-            // Store the AI's response
-            userChat.messages.push({ role: "robot", content: aiReply });
+            //stores robot responseq to the DB
+            userChat.messages.push({ role: "bot", content: aiReply });
     
            // Save conversation to database
             await userChat.save(); 
 
-            // Send the AI's response
+            //sends ai response
             message.reply(aiReply);
 
             console.log(`AI Response: ${aiReply}`);
@@ -96,6 +96,5 @@ client.on('messageCreate', async (message) => {
             console.error("Error with OpenAI API:", error);
         }
     }
-    
 });
 client.login("MTE3NDg3MDk1ODkzNTM4ODI3MQ.GiR628.SIzH0DbmkAyWsheqh7iSJS4-ZawOlK12ptcK88");
